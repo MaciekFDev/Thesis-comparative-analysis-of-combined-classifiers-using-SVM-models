@@ -10,14 +10,17 @@ import matplotlib.patches as mpatches
 
 
 # For one-dimensional sets
-tab = np.arange(18)
+tab = np.arange(-10,11,1)
 tab0 = np.zeros(18)
 
 # For two-dimensional sets
-X, y = sk.datasets.make_blobs(n_samples = 18, centers = 2)
+X, y = sk.datasets.make_blobs(n_samples = 21, centers = 2)
+
+# For kernel function (increasing dimensions)
+tab1 = tab*tab
 
 # Plotting part
-plt.scatter(tab, tab0, marker='o', c=np.array(['yellow', 'red'])[y], s=25, edgecolor='k', label='Class 1 and Class 2')
+plt.scatter(tab, tab1, marker='o', c=np.array(['yellow', 'red'])[y], s=25, edgecolor='k', label='Class 1 and Class 2')
 pop_a = mpatches.Patch(color='yellow', label="Class 1")
 pop_b = mpatches.Patch(color='red', label="Class 2")
 plt.xlabel("Feature 1")
