@@ -5,22 +5,23 @@ from matplotlib import pyplot as plt
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
-training_images = []     # half of pictures of each object
-testing_images = []      # second half, remaining pictures
-edges_training = []      # analogic variables, but for edges for particular images
+training_images = []                # half of pictures of each object
+testing_images = []                 # second half, remaining pictures
+edges_training = []                 # analogic variables, but for edges for particular images
 edges_testing = []
-Hu_training = []         # analogic variables, but for hu's invariant moments
+Hu_training = []                    # analogic variables, but for hu's invariant moments
 Hu_testing = []
-training_images_ids = [] # variable for splitting images into rightful sets
+training_images_ids = []            # variable for splitting images into rightful sets
 testing_images_ids = []
-X_test_2 = []            # temporary variable for testing stage
+X_test_2 = []                       # temporary variable for testing stage
 y_test_2 = []
-score_clf = []           # array for holding scores for each single classification
-mod = 0                  # modifier, responsible for navigating between objects in feature extraction part
-nr_array = np.arange(0, 356, 5) # array with numbers for randomizing images in both sets
+score_single_classifier = []        # array for holding scores for each single classification for single SVM case
+score_ensemble_classifier = []      # array for holding scores for each single classification for SVM ensemble case
+mod = 0                             # modifier, responsible for navigating between objects in feature extraction part
+nr_array = np.arange(0, 356, 5)     # array with numbers for randomizing images in both sets
 test_array = np.arange(0, 3601, 36) # array arranged for picking testing classes for svm
-obj = 'obj'              # variable responsible for navigation between objects' images in images loading stage
-                         # Path to folder containing objects' images at local repository
+obj = 'obj'                         # variable responsible for navigation between objects' images in images loading stage
+                                    # Path to folder containing objects' images at local repository
 path = 'C:/Users/Veteran/Object-recognition-using-SVM-models/coil-100/'
 
 # Feature extraction from images
@@ -78,7 +79,7 @@ y_test = Hu_testing[:,-1]
 clf = SVC()                   # Initializing classifier
 clf.fit(X_train, y_train)     # Training classifier and calculating the score on test set
 
-for j in range(0, 100, 1):    # Testing stage - first image is being comparised to every other from testing set
+for j in range(0, 100, 1):    # Testing stage for single SVM case - first image is being comparised to every other from testing set
     X_test_2.clear()
     y_test_2.clear()
     for k in range(0, 36, 1):
@@ -90,10 +91,26 @@ for j in range(0, 100, 1):    # Testing stage - first image is being comparised 
         y_test_2.append(y_test[l])
 
     score = accuracy_score(y_test_2, clf.predict(X_test_2)) 
-    score_clf.append(round(score*100, 2))  # Calculating accuracy for each classification and saving it in array
+    score_single_classifier.append(round(score*100, 2))  # Calculating accuracy for each classification and saving it in array
+
+
+for j in range(0, 100, 1):    # Testing stage for SVM ensemble case - first image is being comparised to every other from testing set
+    X_test_2.clear()
+    y_test_2.clear()
+    for k in range(0, 36, 1):
+        X_test_2.append(X_test[k])
+        y_test_2.append(y_test[k])
+
+    for l in range(test_array[j], test_array[j]+36, 1):
+        X_test_2.append(X_test[l])
+        y_test_2.append(y_test[l])
+
+    score = accuracy_score(y_test_2, clf.predict(X_test_2)) 
+    score_ensemble_classifier.append(round(score*100, 2))  # Calculating accuracy for each classification and saving it in array
 
 #for k in range(72): # For displaying images
     #cv2.imshow('', edges_training[k][0])
     #cv2.waitKey()
 
-print('Classification accuracy for SVM (in %): ', score_clf)
+print('Classification accuracy for single SVM (in %): ', score_single_classifier)
+print('Classification accuracy for SVM ensemble (in %): ', score_ensemble_classifier)
