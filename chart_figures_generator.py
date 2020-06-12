@@ -4,10 +4,10 @@ from sklearn import datasets, preprocessing
 import numpy as np
 import matplotlib.patches as mpatches
 
-
+#####################
 # Software will be used to generate exemplary charts which will be used in thesis' figures.
 # Creating sets for exemplary points (objects of classification)
-
+###
 
 # For one-dimensional sets
 tab = np.arange(-10,11,1)
@@ -20,7 +20,7 @@ X, y = sk.datasets.make_blobs(n_samples = 21, centers = 2)
 tab1 = tab*tab
 
 # Plotting part
-plt.scatter(tab, tab1, marker='o', c=np.array(['yellow', 'red'])[y], s=25, edgecolor='k', label='Class 1 and Class 2')
+plt.scatter(X, y, marker='o', c=np.array(['yellow', 'red'])[y], s=25, edgecolor='k', label='Class 1 and Class 2')
 pop_a = mpatches.Patch(color='yellow', label="Class 1")
 pop_b = mpatches.Patch(color='red', label="Class 2")
 plt.xlabel("Feature 1")

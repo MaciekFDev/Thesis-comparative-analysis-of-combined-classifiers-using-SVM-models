@@ -13,15 +13,21 @@ edges_training = []                 # analogic variables, but for edges for part
 edges_testing = []
 Hu_training = []                    # analogic variables, but for hu's invariant moments
 Hu_testing = []
-training_images_ids = []            # variable for splitting images into rightful sets
+training_images_ids = []            # variables for splitting images into rightful sets
 testing_images_ids = []
-X_test_2 = []                       # temporary variable for testing stage
+X_test_2 = []                       # temporary variables for testing stage
 y_test_2 = []
 score_single_classifier = []             # array for holding scores for each single classification for single SVM case
 score_ensemble_adab_classifier = []      # array for holding scores for each single classification for AdaBoost SVM ensemble case
 score_ensemble_bagging_classifier = []   # array for holding scores for each single classification for Bagging SVM ensemble case
-datamean = []                       # array for storing mean values of classification results
-datastd = []                        # array for storing standard deviation values of classification results
+datamean_adab = []                       # arrays for storing mean values of classification results
+datamean_bagging = []
+datamean_single = []
+datamean = []
+datastd_adab = []                        # arrays for storing standard deviation values of classification results
+datastd_bagging = []
+datastd_single = []
+datastd = []
 mod = 0                             # modifier, responsible for navigating between objects in feature extraction part
 nr_array = np.arange(0, 356, 5)     # array with numbers for randomizing images in both sets
 test_array = np.arange(0, 3601, 36) # array arranged for picking testing classes for svm
@@ -30,7 +36,7 @@ obj = 'obj'                         # variable responsible for navigation betwee
 path = 'C:/Users/Veteran/Thesis-combined-svm-algorithms-analysis/Datasets/coil-100/'
 
 # Feature extraction from images
-for i in range(1,101,1):        # loop over particular objects' folders
+for i in range(1,51,1):        # loop over particular objects' folders
     obj_nr = obj + str(i)       # storing object's number (label)
 
     # Creating two sets of earlier separated images
@@ -59,6 +65,8 @@ for i in range(1,101,1):        # loop over particular objects' folders
     for k in range(36):
         edges_training.append([cv2.Canny(training_images[k+mod][0],100,200), i])
         edges_testing.append([cv2.Canny(testing_images[k+mod][0],100,200), i])
+        #edges_training.append([training_images[k+mod][0], i])
+        #edges_testing.append([testing_images[k+mod][0], i])
 
     # Calculating Hu's invariant values for each image
     for k in range(36):
@@ -93,12 +101,13 @@ time.sleep(3)
 Bagging = BaggingClassifier(base_estimator=SVC(),
                 n_estimators=10,random_state=0)     # Initializing classificators ensemble by using Bagging
 Bagging.fit(X_train, y_train)                       # Training given ensemble
-time.sleep(3)
 
-for j in range(0, 100, 1):                          # Testing stage for single SVM case - choosen (first) image
+training_object = 1188
+time.sleep(3)
+for j in range(0, 50, 1):                          # Testing stage for bagging SVM ensemble case - every image
     X_test_2.clear()                                # is being comparised to every other from testing set
     y_test_2.clear()
-    for k in range(0, 36, 1):
+    for k in range(training_object, training_object+36, 1):
         X_test_2.append(X_test[k])
         y_test_2.append(y_test[k])
 
@@ -111,10 +120,10 @@ for j in range(0, 100, 1):                          # Testing stage for single S
     score_single_classifier.append(round(score*100, 2))
 
 time.sleep(3)
-for j in range(0, 100, 1):                          # Testing stage for AdaBoost SVM ensemble case - choosen (first) image
+for j in range(0, 50, 1):                          # Testing stage for bagging SVM ensemble case - every image
     X_test_2.clear()                                # is being comparised to every other from testing set
     y_test_2.clear()
-    for k in range(0, 36, 1):
+    for k in range(training_object, training_object+36, 1):
         X_test_2.append(X_test[k])
         y_test_2.append(y_test[k])
 
@@ -127,10 +136,10 @@ for j in range(0, 100, 1):                          # Testing stage for AdaBoost
     score_ensemble_adab_classifier.append(round(score*100, 2))
 
 time.sleep(3)
-for j in range(0, 100, 1):                          # Testing stage for bagging SVM ensemble case - choosen (first) image
+for j in range(1, 50, 1):                          # Testing stage for bagging SVM ensemble case - every image
     X_test_2.clear()                                # is being comparised to every other from testing set
     y_test_2.clear()
-    for k in range(0, 36, 1):
+    for k in range(training_object, training_object+36, 1):
         X_test_2.append(X_test[k])
         y_test_2.append(y_test[k])
 
@@ -142,16 +151,25 @@ for j in range(0, 100, 1):                          # Testing stage for bagging 
     score = accuracy_score(y_test_2, Bagging.predict(X_test_2))     # For Bagging SVM ensemble
     score_ensemble_bagging_classifier.append(round(score*100, 2))
 
-#for k in range(72): # For displaying images
-    #cv2.imshow('', edges_training[k][0])
-    #cv2.waitKey()
+#for k in range(72,108): # For displaying images
+ #   cv2.imshow('', edges_training[k][0])
+ #   cv2.waitKey()
 
-# Calculating mean values for each classification task case
+#for i in range(20):
+    # Calculating mean values for each classification task case
+  #  datamean_adab.append(np.mean(score_ensemble_adab_classifier[i*100:(i+1)*100]))
+  #  datamean_bagging.append(np.mean(score_ensemble_bagging_classifier[i*100:(i+1)*100]))
+  #  datamean_single.append(np.mean(score_single_classifier[i*100:(i+1)*100]))
+
+    # Calculating standard deviation values for each classification task
+  #  datastd_adab.append(np.std(score_ensemble_adab_classifier[i*100:(i+1)*100]))
+  #  datastd_bagging.append(np.std(score_ensemble_bagging_classifier[i*100:(i+1)*100]))
+  #  datastd_single.append(np.std(score_single_classifier[i*100:(i+1)*100]))
+
 datamean.append(np.mean(score_ensemble_adab_classifier))
 datamean.append(np.mean(score_ensemble_bagging_classifier))
 datamean.append(np.mean(score_single_classifier))
 
-# Calculating standard deviation values for each classification task
 datastd.append(np.std(score_ensemble_adab_classifier))
 datastd.append(np.std(score_ensemble_bagging_classifier))
 datastd.append(np.std(score_single_classifier))
