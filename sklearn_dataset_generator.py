@@ -8,6 +8,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.svm import SVC
 import os
 import csv
+import pandas as pd
 
 #####################
 # Software in charge of generating data with use of Scikit-learn library
