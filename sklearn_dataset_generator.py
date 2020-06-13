@@ -48,28 +48,3 @@ plt.title("Gaussian quantiles dataset")
 plt.scatter(X_gauss[:,0], X_gauss[:,1], marker='o', c=y_gauss, s=25, edgecolor='k')
 
 plt.show()
-
-print(X_blobs)
-
-# Saving generated data to file for further processing
-# Saving blobs
-
-X_blobs.tofile('X_blobs_file.txt', format='%b')
-
-
-np.savetxt("y_blobs_file.txt", y_blobs, fmt="%s")
-
-# Saving moons
-np.savetxt("X_moon_file.txt", X_moon, fmt="%s")
-
-np.savetxt("y_moon_file.txt", y_moon, fmt="%s")
-
-# Saving circles
-np.savetxt("X_circle_file.txt", X_circle, fmt="%s")
-
-np.savetxt("y_circle_file.txt", y_circle, fmt="%s")
-
-# Saving gaussian quantiles
-np.savetxt("X_gauss_file.txt", X_gauss, fmt="%s")
-
-np.savetxt("y_gauss_file.txt", y_gauss, fmt="%s")
