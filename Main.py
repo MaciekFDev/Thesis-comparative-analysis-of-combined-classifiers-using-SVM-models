@@ -33,14 +33,17 @@ scores = np.zeros(4)
 
 #X, y = sk.datasets.make_gaussian_quantiles(n_samples = 5000, n_classes = 2)
 
-X = np.loadtxt('C:/Users/Veteran/Thesis-combined-svm-algorithms-analysis/X_blobs_file5.txt', delimiter = ',')
-y = np.loadtxt('C:/Users/Veteran/Thesis-combined-svm-algorithms-analysis/y_gauss_file5.txt', delimiter = ',')
+X = np.loadtxt('C:/Users/Veteran/Thesis-combined-svm-algorithms-analysis/'
+                'X_blobs_file5.txt', delimiter = ',')
+y = np.loadtxt('C:/Users/Veteran/Thesis-combined-svm-algorithms-analysis/'
+                'y_blobs_file5.txt', delimiter = ',')
 
-print(len(X))
 X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
 
-AdaBclf = AdaBoostClassifier(base_estimator=SVC(probability=True, kernel='poly'), n_estimators=25)
-Baggingclf = BaggingClassifier(base_estimator=SVC(probability=True, kernel='poly'), n_estimators=25)
+AdaBclf = AdaBoostClassifier(base_estimator=SVC(probability=True, kernel='poly'),
+                            n_estimators=25)
+Baggingclf = BaggingClassifier(base_estimator=SVC(probability=True, kernel='poly'),
+                            n_estimators=25)
 
 AdaBclf.fit(X_train, y_train)
 scores[0] = accuracy_score(y_test, AdaBclf.predict(X_test)) *100
