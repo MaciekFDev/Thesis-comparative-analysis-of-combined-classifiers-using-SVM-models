@@ -49,31 +49,27 @@ plt.scatter(X_gauss[:,0], X_gauss[:,1], marker='o', c=y_gauss, s=25, edgecolor='
 
 plt.show()
 
+print(X_blobs)
+
 # Saving generated data to file for further processing
 # Saving blobs
-with open('X_blobs_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerows(X_blobs)
 
-with open('y_blobs_file.csv', mode='w') as file:
-    csv.writer(file, delimiter = ' ').writerow(y_blobs)
+X_blobs.tofile('X_blobs_file.txt', format='%b')
+
+
+np.savetxt("y_blobs_file.txt", y_blobs, fmt="%s")
 
 # Saving moons
-with open('X_moon_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerows(X_moon)
+np.savetxt("X_moon_file.txt", X_moon, fmt="%s")
 
-with open('y_moon_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerow(y_moon)
+np.savetxt("y_moon_file.txt", y_moon, fmt="%s")
 
 # Saving circles
-with open('X_circle_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerows(X_circle)
+np.savetxt("X_circle_file.txt", X_circle, fmt="%s")
 
-with open('y_circle_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerow(y_circle)
+np.savetxt("y_circle_file.txt", y_circle, fmt="%s")
 
 # Saving gaussian quantiles
-with open('X_gauss_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerows(X_gauss)
+np.savetxt("X_gauss_file.txt", X_gauss, fmt="%s")
 
-with open('y_gauss_file.csv', 'w') as file:
-    csv.writer(file, delimiter = ' ').writerow(y_gauss)
+np.savetxt("y_gauss_file.txt", y_gauss, fmt="%s")
