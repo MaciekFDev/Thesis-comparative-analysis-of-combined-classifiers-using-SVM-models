@@ -17,24 +17,24 @@ import pandas as pd
 # Datasets' generator
 
 # Standard blobs sets
-X_blobs, y_blobs = sk.datasets.make_blobs(n_samples = 10000, centers = 2)
+X_class, y_class = sk.datasets.make_classification(n_samples = 5000)
 
 # Moon sets
-X_moon, y_moon = sk.datasets.make_moons(n_samples = 10000, noise = 0.1)
+X_moon, y_moon = sk.datasets.make_moons(n_samples = 5000, noise = 0.1)
 
 # Circle sets
-X_circle, y_circle = sk.datasets.make_circles(n_samples = 10000, noise = 0.05)
+X_circle, y_circle = sk.datasets.make_circles(n_samples = 5000, noise = 0.05)
 
 # Classification dataset
-X_gauss, y_gauss = sk.datasets.make_gaussian_quantiles(n_samples = 10000, n_classes = 2)
+X_gauss, y_gauss = sk.datasets.make_gaussian_quantiles(n_samples = 5000, n_classes = 2)
 
 # Plotting all datasets
 plt.figure(figsize=(8, 8))
 plt.subplots_adjust(bottom=.05, top=.9, left=.05, right=.95)
 
 plt.subplot(411)
-plt.title("Blobs dataset")
-plt.scatter(X_blobs[:,0], X_blobs[:,1], marker='o', c=y_blobs, s=25, edgecolor='k')
+plt.title("Classification dataset")
+plt.scatter(X_class[:,0], X_class[:,1], marker='o', c=y_class, s=25, edgecolor='k')
 
 plt.subplot(412)
 plt.title("Moon dataset")
@@ -50,16 +50,14 @@ plt.scatter(X_gauss[:,0], X_gauss[:,1], marker='o', c=y_gauss, s=25, edgecolor='
 
 plt.show()
 
-np.savetxt('X_blobs_file10.txt', X_blobs, delimiter = ',')
-np.savetxt('y_blobs_file10.txt', y_blobs, delimiter = ',')
+np.savetxt('X_class_file5.txt', X_class, delimiter = ',')
+np.savetxt('y_class_file5.txt', y_class, delimiter = ',')
 
-np.savetxt('X_moon_file10.txt', X_moon, delimiter = ',')
-np.savetxt('y_moon_file10.txt', y_moon, delimiter = ',')
+np.savetxt('X_moon_file5.txt', X_moon, delimiter = ',')
+np.savetxt('y_moon_file5.txt', y_moon, delimiter = ',')
 
-np.savetxt('X_circle_file10.txt', X_circle, delimiter = ',')
-np.savetxt('y_circle_file10.txt', y_circle, delimiter = ',')
+np.savetxt('X_circle_file5.txt', X_circle, delimiter = ',')
+np.savetxt('y_circle_file5.txt', y_circle, delimiter = ',')
 
-np.savetxt('X_gauss_file10.txt', X_gauss, delimiter = ',')
-np.savetxt('y_gauss_file10.txt', y_gauss, delimiter = ',')
-
-# new_blobs = np.loadtxt('dataset_x_blobs.txt', delimiter = ',')
+np.savetxt('X_gauss_file5.txt', X_gauss, delimiter = ',')
+np.savetxt('y_gauss_file5.txt', y_gauss, delimiter = ',')
